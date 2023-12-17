@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const { Triangle, Square, Circle } = require("./shapes.js");
+const { Triangle, Square, Circle } = require("./utils/shapes.js");
 
 async function generateShape() {
   const answers = await inquirer.prompt([

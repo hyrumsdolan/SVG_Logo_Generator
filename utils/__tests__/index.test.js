@@ -1,4 +1,4 @@
-const generateShape = require('../index');
+const generateShape = require('../../index');
 const inquirer = require('inquirer');
 const { Triangle, Square, Circle } = require('../shapes');
 const fs = require('fs');
