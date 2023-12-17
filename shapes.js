@@ -5,34 +5,36 @@ class Shape {
         this.color = color;
     }
 
-    render(content, width = 100, height = 100) { // Set default size for all shapes
-        return `<svg width="${width}" height="${height}">${content}</svg>`;
+    render(content, width = 100, height = 100) {
+        return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
+    }
+
+    renderText(acronym, textColor, yPosition = '50%') {
+        return `<text x="50%" y="${yPosition}" dominant-baseline="middle" text-anchor="middle" fill="${textColor}" font-size="25">${acronym}</text>`;
     }
 }
 
 class Triangle extends Shape {
-    render() {
-        // Hard-coded points for an equilateral triangle centered in a 100x100 SVG
+    render(acronym, textColor) {
         const content = `<polygon points="50, 10 0,90 100,90" fill="${this.color}" />`;
-        return super.render(content);
+        const text = this.renderText(acronym, textColor, '62%');
+        return super.render(content + text);
     }
 }
 
 class Square extends Shape {
-    render() {
-        // Use a consistent side length for the square
-        const sideLength = 80; // Adjust as needed
-        const content = `<rect x="10" y="10" width="${sideLength}" height="${sideLength}" fill="${this.color}" />`;
-        return super.render(content);
+    render(acronym, textColor) {
+        const content = `<rect x="10" y="10" width="80" height="80" fill="${this.color}" />`;
+        const text = this.renderText(acronym, textColor);
+        return super.render(content + text);
     }
 }
 
 class Circle extends Shape {
-    render() {
-        // Set the radius to half of the square's side length
-        const radius = 40; // Adjust as needed
-        const content = `<circle cx="50" cy="50" r="${radius}" fill="${this.color}" />`;
-        return super.render(content);
+    render(acronym, textColor) {
+        const content = `<circle cx="50" cy="50" r="40" fill="${this.color}" />`;
+        const text = this.renderText(acronym, textColor);
+        return super.render(content + text);
     }
 }
 
@@ -50,6 +52,11 @@ const myTriangle = new Triangle('blue');
 const mySquare = new Square('red');
 const myCircle = new Circle('green');
 
-writeSvgFile('./examples/triangle.svg', myTriangle.render());
-writeSvgFile('./examples/square.svg', mySquare.render());
-writeSvgFile('./examples/circle.svg', myCircle.render());
+const acronym = 'SVG'; // Define your acronym here
+const textColor = 'white'; // Define your preferred text color here
+
+writeSvgFile('./examples/triangle.svg', myTriangle.render(acronym, textColor));
+writeSvgFile('./examples/square.svg', mySquare.render(acronym, textColor));
+writeSvgFile('./examples/circle.svg', myCircle.render(acronym, textColor));
+
+module.exports = { Shape, Triangle, Square, Circle };
